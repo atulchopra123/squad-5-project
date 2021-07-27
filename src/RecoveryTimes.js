@@ -21,11 +21,11 @@ function RecoveryTimes() {
   return (
     <div className="RecoveryTimes">
       <form onSubmit={onSubmit}>
-        <div>
+        <div id="recoveryTimesTitle">
             Recovery Times
         </div>
-        <div>
-          <label htmlFor="mttlValue">MTTR:</label>
+        <div id="mttrDiv">
+          <label htmlFor="mttrValue">MTTR:</label>
           <span id="mttrValue">mttr value</span>
         </div>
         <table className="table">
@@ -81,7 +81,14 @@ function RecoveryTimes() {
             <label htmlFor="duration">Duration:</label>
           </div>
           <div>
-            <input id="duration"  type="text"></input>
+            <input
+                id="duration"
+                className="form-control"
+                type="text"
+                name="duration"
+                value={newRecovery.duration}
+                onChange={(e) => setNewRecovery({ ...newRecovery, duration: e.target.value })}
+              />
           </div>
         </span>
 
