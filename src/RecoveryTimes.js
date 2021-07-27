@@ -44,7 +44,7 @@ function RecoveryTimes() {
             </tbody>
         </table>
         <div>
-          <span id="startDateSpan">
+          <span id="startDateSpan" style={{width:300,float:'left'}}>
               <label htmlFor="startDate">Start Date:</label>
               <input
                   id="startDate"
@@ -56,7 +56,7 @@ function RecoveryTimes() {
                 />
           </span>
 
-          <span id="startTimeSpan">
+          <span id="startTimeSpan" style={{width:300, float:'right'}}>
               <label htmlFor="startTime">Start Time:</label>
                 <input
                   id="startTime"
