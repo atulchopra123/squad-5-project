@@ -1,10 +1,11 @@
+
+import './App.css';
+import RecoveryTimes from "./RecoveryTimes";
 import Deployment from "./Deployments";
-//import LeadTimes from "./LeadTimes";
-//import RecoveryTimes from "./RecoveryTimes";
 
 function App() {
   return (
-  <div className="row">
+    <div className="row">
       <div className="col">
         {Deployment()}
         LeadTimes
@@ -12,10 +13,10 @@ function App() {
       </div>
   <div className="col">
         RecoveryTimes
-        {/*RecoveryTimes*/}
+        {RecoveryTimes}
 
   </div>
-</div>
+  </div>
   );
 }
 
