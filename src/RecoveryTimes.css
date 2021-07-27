@@ -1,0 +1,21 @@
+th, td {
+  border: 1px solid black;
+}
+
+#startTimeSpan {
+  width: 50%;
+  float: right;
+  background-color: lightblue;
+}
+
+#startDateSpan {
+  width: 50%;
+  float: left;
+  background-color: lightgreen;
+}
+
+#durationSpan {
+  width: 100%;
+  float: left;
+  background-color: lightsalmon;
+}
