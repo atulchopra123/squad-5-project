@@ -21,6 +21,6 @@ test('renders Start Date Input', () => {
 
 test('renders Duration Input', () => {
   render(<RecoveryTimes />);
-  const linkElement = screen.getByText(/Duration:/i);
+  const linkElement = screen.getByText(/Duration (minutes):/i);
   expect(linkElement).toBeInTheDocument();
 });

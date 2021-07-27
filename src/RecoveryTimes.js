@@ -21,9 +21,9 @@ function RecoveryTimes() {
   };
 
   useEffect(() => {
-      // This is be executed when `recoveries` state changes
-      // store an array of objects in localStorage
-      localStorage.setItem("recoveries_json", JSON.stringify(recoveries));
+    // This is be executed when `recoveries` state changes
+    // store an array of objects in localStorage
+    localStorage.setItem("recoveries_json", JSON.stringify(recoveries));
   }, [recoveries])
 
   function formatDate(date, time) {
@@ -45,8 +45,10 @@ function RecoveryTimes() {
       <form onSubmit={onSubmit}>
         <h1 id="recoveryTimesTitle">Recovery Times</h1>
         <div id="mttrDiv">
-          <label htmlFor="mttrValue">MTTR:</label>
-          <span id="mttrValue">mttr value</span>
+          <label htmlFor="mttrValue" style={{paddingRight:'5px'}}>MTTR:</label>
+          <span id="mttrValue">
+            { (recoveries.reduce((total, recovery) =>  (total + parseInt(recovery.duration)),0) / recoveries.length).toFixed(2) } minutes
+          </span>
         </div>
         <table className="table table-bordered">
             <thead>
@@ -92,7 +94,7 @@ function RecoveryTimes() {
           </span>
 
           <span id="durationSpan" style={{width:'100%', float:'right', paddingTop:'10px', paddingBottom:'10px'}}>
-              <label htmlFor="duration">Duration:</label>
+              <label htmlFor="duration">Duration (minutes):</label>
               <input
                   id="duration"
                   className="form-control"
