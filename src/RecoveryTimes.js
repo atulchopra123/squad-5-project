@@ -1,5 +1,7 @@
 import './RecoveryTimes.css';
 import React, { useState } from "react";
+import Button from "react-bootstrap/Button";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function RecoveryTimes() {
 
