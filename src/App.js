@@ -12,8 +12,7 @@ function App() {
         {/*LeadTimes*/}
       </div>
   <div className="col">
-        RecoveryTimes
-        {RecoveryTimes}
+        {RecoveryTimes()}
 
   </div>
   </div>
