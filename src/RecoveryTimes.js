@@ -43,56 +43,45 @@ function RecoveryTimes() {
               </tr>
             </tbody>
         </table>
-        
-        <span id="startDateSpan">
-          <div>
-            <label htmlFor="startDate">Start Date:</label>
-          </div>  
-          <div>
-            <input
-                id="startDate"
-                className="form-control"
-                type="date"
-                name="startDate"
-                value={newRecovery.startTime}
-                onChange={(e) => setNewRecovery({ ...newRecovery, startTime: e.target.value })}
-              />
-          </div>
-        </span>
-
-        <span id="startTimeSpan">
-          <div>
-            <label htmlFor="startTime">Start Time:</label>
-          </div>
-          <div>
+        <div>
+          <span id="startDateSpan">
+              <label htmlFor="startDate">Start Date:</label>
               <input
-                id="startTime"
-                className="form-control"
-                type="time"
-                name="startTime"
-                value={newRecovery.startTime}
-                onChange={(e) => setNewRecovery({ ...newRecovery, startTime: e.target.value })}
-              />
-          </div>
-        </span>
+                  id="startDate"
+                  className="form-control"
+                  type="date"
+                  name="startDate"
+                  value={newRecovery.startTime}
+                  onChange={(e) => setNewRecovery({ ...newRecovery, startTime: e.target.value })}
+                />
+          </span>
 
-        <span id="durationSpan">
-          <div>
-            <label htmlFor="duration">Duration:</label>
-          </div>
-          <div>
-            <input
-                id="duration"
-                className="form-control"
-                type="text"
-                name="duration"
-                value={newRecovery.duration}
-                onChange={(e) => setNewRecovery({ ...newRecovery, duration: e.target.value })}
-              />
-          </div>
-        </span>
+          <span id="startTimeSpan">
+              <label htmlFor="startTime">Start Time:</label>
+                <input
+                  id="startTime"
+                  className="form-control"
+                  type="time"
+                  name="startTime"
+                  value={newRecovery.startTime}
+                  onChange={(e) => setNewRecovery({ ...newRecovery, startTime: e.target.value })}
+                />
+          </span>
+
+          <span id="durationSpan">
+              <label htmlFor="duration">Duration:</label>
+              <input
+                  id="duration"
+                  className="form-control"
+                  type="text"
+                  name="duration"
+                  value={newRecovery.duration}
+                  onChange={(e) => setNewRecovery({ ...newRecovery, duration: e.target.value })}
+                />
+          </span>
 
         <input id="buttonAddRecovery" type="button" value="Add Recovery Time"/>
+        </div>
       </form>  
     </div>  
   );
