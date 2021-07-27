@@ -40,9 +40,6 @@ function RecoveryTimes() {
     return d.toLocaleTimeString("en-US");
   }
   
-  // retrieve an array of objects from localStorage
-  const data = JSON.parse(localStorage.getItem("participants"));
-
   return (
     <div className="container pt-5">
       <form onSubmit={onSubmit}>
