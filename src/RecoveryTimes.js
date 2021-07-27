@@ -1,12 +1,14 @@
 import './RecoveryTimes.css';
-import React, { useState } from "react";
-import Button from "react-bootstrap/Button";
+import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function RecoveryTimes() {
 
+  // retrieve an array of objects from localStorage
+  const recoveries_stored = JSON.parse(localStorage.getItem("recoveries_json"));
+
   // define state for the list of recoveries
-  const [recoveries, setRecoveries] = useState([]);
+  const [recoveries, setRecoveries] = useState(recoveries_stored ? recoveries_stored : []);
 
   // define state for the Recoveries form
   const [newRecovery, setNewRecovery] = useState({ startDate: "", startTime: "", duration: "" });
@@ -18,17 +20,38 @@ function RecoveryTimes() {
     setNewRecovery({ startDate: "", startTime: "", duration: "" });
   };
 
+  useEffect(() => {
+      // This is be executed when `recoveries` state changes
+      // store an array of objects in localStorage
+      localStorage.setItem("recoveries_json", JSON.stringify(recoveries));
+  }, [recoveries])
+
+  function formatDate(date, time) {
+    const utcSeconds = new Date(...`${date} ${time}`.split(/[- :]/)).getTime() / 1000;
+    const d = new Date(0);
+    d.setUTCSeconds(utcSeconds);
+    return d.toLocaleDateString("en-US");
+  }
+
+  function formatTime(date, time) {
+    const utcSeconds = new Date(...`${date} ${time}`.split(/[- :]/)).getTime() / 1000;
+    const d = new Date(0);
+    d.setUTCSeconds(utcSeconds);
+    return d.toLocaleTimeString("en-US");
+  }
+  
+  // retrieve an array of objects from localStorage
+  const data = JSON.parse(localStorage.getItem("participants"));
+
   return (
-    <div className="RecoveryTimes">
+    <div className="container pt-5">
       <form onSubmit={onSubmit}>
-        <div id="recoveryTimesTitle">
-            Recovery Times
-        </div>
+        <h1 id="recoveryTimesTitle">Recovery Times</h1>
         <div id="mttrDiv">
           <label htmlFor="mttrValue">MTTR:</label>
           <span id="mttrValue">mttr value</span>
         </div>
-        <table className="table">
+        <table className="table table-bordered">
             <thead>
               <tr>
                 <th>Start Time</th>
@@ -36,51 +59,55 @@ function RecoveryTimes() {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>
-
-                </td>
-              </tr>
-            </tbody>
+              {recoveries.map((recovery, i) => (
+                <tr key={i}>
+                  <td>{formatDate(recovery.startDate, recovery.startTime)} {formatTime(recovery.startDate, recovery.startTime)}</td>
+                  <td>{recovery.duration}</td>
+                </tr>
+              ))}
+          </tbody>
         </table>
         <div>
-          <span id="startDateSpan" style={{width:300,float:'left'}}>
+          <span id="startDateSpan" style={{width:'50%',float:'left', paddingRight:'10px'}}>
               <label htmlFor="startDate">Start Date:</label>
               <input
                   id="startDate"
                   className="form-control"
                   type="date"
                   name="startDate"
-                  value={newRecovery.startTime}
-                  onChange={(e) => setNewRecovery({ ...newRecovery, startTime: e.target.value })}
+                  required
+                  value={newRecovery.startDate}
+                  onChange={(e) => setNewRecovery({ ...newRecovery, startDate: e.target.value })}
                 />
           </span>
 
-          <span id="startTimeSpan" style={{width:300, float:'right'}}>
+          <span id="startTimeSpan" style={{width:'50%', float:'right'}}>
               <label htmlFor="startTime">Start Time:</label>
                 <input
                   id="startTime"
                   className="form-control"
                   type="time"
                   name="startTime"
+                  required
                   value={newRecovery.startTime}
                   onChange={(e) => setNewRecovery({ ...newRecovery, startTime: e.target.value })}
                 />
           </span>
 
-          <span id="durationSpan">
+          <span id="durationSpan" style={{width:'100%', float:'right', paddingTop:'10px', paddingBottom:'10px'}}>
               <label htmlFor="duration">Duration:</label>
               <input
                   id="duration"
                   className="form-control"
-                  type="text"
+                  type="number"
+                  required min="1" max="1440"
                   name="duration"
                   value={newRecovery.duration}
                   onChange={(e) => setNewRecovery({ ...newRecovery, duration: e.target.value })}
                 />
           </span>
-
-        <input id="buttonAddRecovery" type="button" value="Add Recovery Time"/>
+          <br/>
+          <button id="buttonAddRecovery" className="btn btn-primary">Add Recovery Time</button>
         </div>
       </form>  
     </div>  
