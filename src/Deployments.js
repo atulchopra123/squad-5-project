@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-//let depNum = 0;
-//let timeSpan = 0;
+import React, { useEffect, useState } from "react";
+import {differenceInCalendarWeeks} from 'date-fns'
+let depNum = 1;
+let timeSpan = 0;
 //let tempDate1 = 0;
 //var currentWeekNumber = require('current-week-number');
-//var startWeek = require('current-week-number');
-//var lastWeek = require('current-week-number');
-let freq = 0;
+var startWeek = require('current-week-number');
+var lastWeek = require('current-week-number');
 
 function jsDate(date, time) {
     var dt = new Date(...`${date} ${time}`.split(/[- :]/));
@@ -26,46 +26,63 @@ function jsDate(date, time) {
     return d.toLocaleTimeString("en-US");
   }
   
+  
 export default function Deployments() {
     
-    // define state for the list of books <td>{format(new Date(book.date), "'Today is a' eeee")}</td>
-    const [books, setBooks] = useState([]);
-    // define state for the book form
-    const [newBook, setNewBook] = useState({ date: "", time: "" });
-    // define the function that runs when the form is submitted
-    const onSubmit = (e) => {
-        /*depNum = depNum + 1;
-        
-        if (depNum === 1) { 
-            timeSpan = 1; //(lastWeek(new Date(books.date)) - startWeek(new Date(books.date)));
+  // define state for the list of deployments <td>{format(new Date(deployment.date), "'Today is a' eeee")}</td>
+  const [deployments, setDeployments] = useState([]);
+  // define state for the deployment form
+  const [newDeployments, setNewDeployments] = useState({ date: "", time: "" });
+  // define the function that runs when the form is submitted
+  const onSubmit = (e) => {
+      e.preventDefault();
+      setDeployments((deployments) => [...deployments, newDeployments]);
+      setNewDeployments({ date: "", time: "" });
+  };
 
-        }
-        else {
-            timeSpan = (lastWeek(new Date(books.date[depNum])) - startWeek(new Date(books.date[1])));
-        }
-        
-        freq = depNum/timeSpan;*/
-
-        e.preventDefault();
-        setBooks((books) => [...books, newBook]);
-        setNewBook({ date: "", time: "" });
-        
-    };
+  function sortDeployments() {
     //Performs the sorting operation for table display (Oldest < Newest)
-    books.sort((a,b) => (a.date > b.date) || ((a.date === b.date) && (a.time > b.time)) ? 1 :  (b.date > a.date) || ((b.date === a.date) && (b.time > a.time)) ? -1 : 0);
+    deployments.sort((a,b) => (a.date > b.date) || ((a.date === b.date) && (a.time > b.time)) ? 1 :  (b.date > a.date) || ((b.date === a.date) && (b.time > a.time)) ? -1 : 0);
+  }
+  
+  function updateFrequency() {
+    depNum = deployments.length;
+   
+    if (depNum == 0) { 
+        freq = "0";
+    } else if (depNum == 1) { 
+      freq = "1";
+    } else {
+    sortDeployments()
 
-    return <div className="container pt-5">
+    let startDate = new Date(deployments[depNum - 1].date);
+    let endDate = new Date(deployments[0].date);
+    let timeDif = differenceInCalendarWeeks(startDate, endDate) + 1;
+    freq = (depNum/timeDif).toFixed(1);
+    
+    }
+  }
+
+  useEffect(() => {
+    // This is be executed when `deployments` state changes as useState() is async
+    updateFrequency()
+  }, [deployments])
+
+  var freq = 0
+  updateFrequency();
+
+return <div className="container pt-5">
     <h1>Deployments</h1>
     
     <div><b> Frequency: {freq}/week </b> </div>
 
     <table className="table table-striped mt-5">
       <tbody>
-        {books.map((book, i) => (
+        {deployments.map((deployment, i) => (
           <tr key={i}>
             <td>{i+1}</td>  
-            <td>{formatDate(book.date, book.time)}</td>
-            <td>{formatTime(book.date, book.time)}</td>
+            <td>{formatDate(deployment.date, deployment.time)}</td>
+            <td>{formatTime(deployment.date, deployment.time)}</td>
           </tr>
         ))}
       </tbody>
@@ -79,8 +96,9 @@ export default function Deployments() {
           className="form-control"
           type="date"
           name="date"
-          value={newBook.date}
-          onChange={(e) => setNewBook({ ...newBook, date: e.target.value })}
+          value={newDeployments.date}
+          required
+          onChange={(e) => setNewDeployments({ ...newDeployments, date: e.target.value })}
         />
       </p>
       <p>
@@ -90,13 +108,14 @@ export default function Deployments() {
           className="form-control"
           type="time"
           name="time"
-          value={newBook.time}
-          onChange={(e) => setNewBook({ ...newBook, time: e.target.value })}
+          value={newDeployments.time}
+          required
+          onChange={(e) => setNewDeployments({ ...newDeployments, time: e.target.value })}
         />
       </p>
       <button className="btn btn-primary">Add Deployment</button>
     </form>
   </div>
-    
-  };
+  
+};
   
