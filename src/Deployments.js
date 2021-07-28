@@ -1,4 +1,11 @@
 import React, { useState } from "react";
+let depNum = 0;
+//let timeSpan = 0;
+//let tempDate1 = 0;
+//var currentWeekNumber = require('current-week-number');
+var startWeek = require('current-week-number');
+var lastWeek = require('current-week-number');
+let freq = 0;
 
 function formatDate(date, time) {
     const utcSeconds = new Date(...`${date} ${time}`.split(/[- :]/)).getTime() / 1000;
@@ -18,20 +25,38 @@ export default function Deployments() {
     
     // define state for the list of books <td>{format(new Date(book.date), "'Today is a' eeee")}</td>
     const [books, setBooks] = useState([]);
-    
+    books.sort((a,b) => (a.date > b.date) || ((a.date === b.date) && (a.time > b.time)) ? 1 :  (b.date > a.date) || ((b.date === a.date) && (b.time > a.time)) ? -1 : 0);
     // define state for the book form
     const [newBook, setNewBook] = useState({ date: "", time: "" });
     
     // define the function that runs when the form is submitted
     const onSubmit = (e) => {
+        /*depNum = depNum + 1;
+        
+        if (depNum === 1) { 
+            timeSpan = 1; //(lastWeek(new Date(books.date)) - startWeek(new Date(books.date)));
+
+        }
+        else {
+            timeSpan = (lastWeek(new Date(books.date[depNum])) - startWeek(new Date(books.date[1])));
+        }
+        
+        freq = depNum/timeSpan;*/
+
         e.preventDefault();
         setBooks((books) => [...books, newBook]);
         setNewBook({ date: "", time: "" });
+        
     };
+
+    
 
     return <div className="container pt-5">
     <h1>Deployments</h1>
-    
+
+   
+    <td> <label> Frequency: {freq}/week </label> </td>
+
     <table className="table table-striped mt-5">
       <tbody>
         {books.map((book, i) => (
@@ -43,6 +68,7 @@ export default function Deployments() {
         ))}
       </tbody>
     </table>
+
     <form onSubmit={onSubmit}>
       <p>
         <label htmlFor="date">Deployment Date</label>
