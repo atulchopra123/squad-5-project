@@ -25,10 +25,8 @@ export default function Deployments() {
     
     // define state for the list of books <td>{format(new Date(book.date), "'Today is a' eeee")}</td>
     const [books, setBooks] = useState([]);
-    books.sort((a,b) => (a.date > b.date) || ((a.date === b.date) && (a.time > b.time)) ? 1 :  (b.date > a.date) || ((b.date === a.date) && (b.time > a.time)) ? -1 : 0);
     // define state for the book form
     const [newBook, setNewBook] = useState({ date: "", time: "" });
-    
     // define the function that runs when the form is submitted
     const onSubmit = (e) => {
         /*depNum = depNum + 1;
@@ -48,13 +46,12 @@ export default function Deployments() {
         setNewBook({ date: "", time: "" });
         
     };
-
-    
+    //Performs the sorting operation for table display (Oldest < Newest)
+    books.sort((a,b) => (a.date > b.date) || ((a.date === b.date) && (a.time > b.time)) ? 1 :  (b.date > a.date) || ((b.date === a.date) && (b.time > a.time)) ? -1 : 0);
 
     return <div className="container pt-5">
     <h1>Deployments</h1>
-
-   
+    
     <td> <label> Frequency: {freq}/week </label> </td>
 
     <table className="table table-striped mt-5">
