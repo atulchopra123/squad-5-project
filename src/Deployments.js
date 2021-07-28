@@ -1,25 +1,30 @@
 import React, { useState } from "react";
-let depNum = 0;
+//let depNum = 0;
 //let timeSpan = 0;
 //let tempDate1 = 0;
 //var currentWeekNumber = require('current-week-number');
-var startWeek = require('current-week-number');
-var lastWeek = require('current-week-number');
+//var startWeek = require('current-week-number');
+//var lastWeek = require('current-week-number');
 let freq = 0;
 
-function formatDate(date, time) {
-    const utcSeconds = new Date(...`${date} ${time}`.split(/[- :]/)).getTime() / 1000;
+function jsDate(date, time) {
+    var dt = new Date(...`${date} ${time}`.split(/[- :]/));
+    // BUG?? - Month seems to be off by 1...
+    dt.setMonth(dt.getMonth() - 1);
+    return dt;
+  }
+  function formatDate(date, time) {
+    const utcSeconds = jsDate(date, time).getTime() / 1000;
     const d = new Date(0);
     d.setUTCSeconds(utcSeconds);
     return d.toLocaleDateString("en-US");
-}
-
-function formatTime(date, time) {
-    const utcSeconds = new Date(...`${date} ${time}`.split(/[- :]/)).getTime() / 1000;
+  }
+  function formatTime(date, time) {
+    const utcSeconds = jsDate(date, time).getTime() / 1000;
     const d = new Date(0);
     d.setUTCSeconds(utcSeconds);
     return d.toLocaleTimeString("en-US");
-}
+  }
   
 export default function Deployments() {
     
@@ -52,7 +57,7 @@ export default function Deployments() {
     return <div className="container pt-5">
     <h1>Deployments</h1>
     
-    <td> <label> Frequency: {freq}/week </label> </td>
+    <div><b> Frequency: {freq}/week </b> </div>
 
     <table className="table table-striped mt-5">
       <tbody>
