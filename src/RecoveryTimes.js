@@ -16,7 +16,6 @@ function RecoveryTimes() {
   //Performs the sorting operation for table display (Oldest < Newest)
   recoveries.sort((a,b) => (a.startDate > b.startDate) || ((a.startDate === b.startDate) && (a.startTime > b.startTime)) ? 1 :  (b.startDate > a.startDate) || ((b.startDate === a.startDate) && (b.startTime > a.startTime)) ? -1 : 0);
 
-
   // define the function that runs when the form is submitted
   const onSubmit = (e) => {
     e.preventDefault();
