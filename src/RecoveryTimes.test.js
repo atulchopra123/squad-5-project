@@ -26,7 +26,7 @@ test('renders Duration Input', () => {
   expect(linkElement).toBeInTheDocument();
 });
 
-test("Validate adding recovery time", () => {
+test("Validate adding multiple recovery time", () => {
   render(<RecoveryTimes />);
 
   const startDateField = screen.getByLabelText("Start Date:");
@@ -47,3 +47,38 @@ test("Validate adding recovery time", () => {
 
   expect(screen.getByText(/90.00 minutes/)).toBeVisible();
 });
+
+test('pass invalid duration value of "A" entered into input field', () => {
+  render(<RecoveryTimes />);
+
+  const durationField = screen.getByLabelText("Duration \(minutes\):"); 
+  userEvent.type(durationField, "A");
+  expect(durationField.value).toBe('');
+});
+
+test('pass invalid duration value of "123456" entered into input field', () => {
+  render(<RecoveryTimes />);
+
+  const durationField = screen.getByLabelText("Duration \(minutes\):"); 
+  userEvent.type(durationField, "123456");
+
+  // Clicking button should reset value of Duration field to ""
+  userEvent.click(screen.getByText("Add Recovery Time"));  
+  expect(durationField.value).toBe('');
+});
+
+/*test('pass invalid duration value of "123456" entered into input field', () => {
+  render(<RecoveryTimes />);
+
+  const startDateField = screen.getByLabelText("Start Date:");
+  const startTimeField = screen.getByLabelText("Start Time:");
+  const durationField = screen.getByLabelText("Duration \(minutes\):"); 
+
+  userEvent.type(startDateField, "8/1/2021");
+  userEvent.type(startTimeField, "07:01 AM");
+  userEvent.type(durationField, "123456");
+
+  // Clicking button should display error message
+  userEvent.click(screen.getByText("Add Recovery Time"));  
+  expect(screen.getByText(/1440/i)).toBeVisible();
+}); */
