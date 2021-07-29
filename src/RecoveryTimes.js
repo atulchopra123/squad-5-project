@@ -1,6 +1,8 @@
 import './RecoveryTimes.css';
 import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { waitForElementToBeRemoved } from '@testing-library/react';
+import {formatDate, formatTime, fixedRound} from "./Squad5Functions.js";
 
 function RecoveryTimes() {
 
@@ -30,20 +32,6 @@ function RecoveryTimes() {
     // store an array of objects in localStorage
     localStorage.setItem("recoveries_json", JSON.stringify(recoveries));
   }, [recoveries])
-
-  function formatDate(date, time) {
-    const utcSeconds = new Date(...`${date} ${time}`.split(/[- :]/)).getTime() / 1000;
-    const d = new Date(0);
-    d.setUTCSeconds(utcSeconds);
-    return d.toLocaleDateString("en-US");
-  }
-
-  function formatTime(date, time) {
-    const utcSeconds = new Date(...`${date} ${time}`.split(/[- :]/)).getTime() / 1000;
-    const d = new Date(0);
-    d.setUTCSeconds(utcSeconds);
-    return d.toLocaleTimeString("en-US");
-  }
   
   return (
     <div className="container pt-5">
@@ -52,7 +40,7 @@ function RecoveryTimes() {
         <div id="mttrDiv">
           <label htmlFor="mttrValue" style={{paddingRight:'5px'}}>MTTR:</label>
           <span id="mttrValue">
-            { (recoveries.reduce((total, recovery) =>  (total + parseInt(recovery.duration)),0) / recoveries.length).toFixed(2) } minutes
+            { fixedRound(recoveries.reduce((total, recovery) =>  (total + parseInt(recovery.duration)),0) / recoveries.length) } minutes
           </span>
         </div>
         <table className="table table-bordered">

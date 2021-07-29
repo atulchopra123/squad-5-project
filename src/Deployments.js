@@ -1,32 +1,9 @@
 import React, { useEffect, useState } from "react";
 import {differenceInCalendarWeeks} from 'date-fns'
+import {formatDate, formatTime, fixedRound} from "./Squad5Functions.js";
 let depNum = 1;
-let timeSpan = 0;
-//let tempDate1 = 0;
-//var currentWeekNumber = require('current-week-number');
-var startWeek = require('current-week-number');
-var lastWeek = require('current-week-number');
 
-function jsDate(date, time) {
-    var dt = new Date(...`${date} ${time}`.split(/[- :]/));
-    // BUG?? - Month seems to be off by 1...
-    dt.setMonth(dt.getMonth() - 1);
-    return dt;
-  }
-  function formatDate(date, time) {
-    const utcSeconds = jsDate(date, time).getTime() / 1000;
-    const d = new Date(0);
-    d.setUTCSeconds(utcSeconds);
-    return d.toLocaleDateString("en-US");
-  }
-  function formatTime(date, time) {
-    const utcSeconds = jsDate(date, time).getTime() / 1000;
-    const d = new Date(0);
-    d.setUTCSeconds(utcSeconds);
-    return d.toLocaleTimeString("en-US");
-  }
-  
-  
+
 export default function Deployments() {
     
   // define state for the list of deployments <td>{format(new Date(deployment.date), "'Today is a' eeee")}</td>
@@ -48,9 +25,9 @@ export default function Deployments() {
   function updateFrequency() {
     depNum = deployments.length;
    
-    if (depNum == 0) { 
+    if (depNum === 0) { 
         freq = "0";
-    } else if (depNum == 1) { 
+    } else if (depNum === 1) { 
       freq = "1";
     } else {
     sortDeployments()
@@ -58,8 +35,8 @@ export default function Deployments() {
     let startDate = new Date(deployments[depNum - 1].date);
     let endDate = new Date(deployments[0].date);
     let timeDif = differenceInCalendarWeeks(startDate, endDate) + 1;
-    freq = (depNum/timeDif).toFixed(1);
-    
+    freq = fixedRound(depNum/timeDif);
+
     }
   }
 

@@ -7,7 +7,6 @@ function App() {
     <div className="row">
       <div className="col">
         {Deployment()}
-        LeadTimes
         {/*LeadTimes*/}
       </div>
   <div className="col">
