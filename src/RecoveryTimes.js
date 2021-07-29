@@ -90,7 +90,7 @@ function RecoveryTimes() {
                   id="duration"
                   className="form-control"
                   type="number"
-                  required min="1" max="1440"
+                  required min="1" max="43200"
                   name="duration"
                   value={newRecovery.duration}
                   onChange={(e) => setNewRecovery({ ...newRecovery, duration: e.target.value })}
