@@ -45,7 +45,7 @@ test("Validate adding multiple recovery time", () => {
   userEvent.type(durationField, "120");
   userEvent.click(screen.getByText("Add Recovery Time"));  
 
-  expect(screen.getByText(/90.00 minutes/)).toBeVisible();
+  expect(screen.getByText(/90 minutes/)).toBeVisible();
 });
 
 test("Validate adding date", () => {
