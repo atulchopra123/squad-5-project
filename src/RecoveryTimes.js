@@ -15,10 +15,8 @@ function RecoveryTimes() {
   // define state for the Recoveries form
   const [newRecovery, setNewRecovery] = useState({ startDate: "", startTime: "", duration: "" });
 
-  
   //Performs the sorting operation for table display (Oldest < Newest)
   recoveries.sort((a,b) => (a.startDate > b.startDate) || ((a.startDate === b.startDate) && (a.startTime > b.startTime)) ? 1 :  (b.startDate > a.startDate) || ((b.startDate === a.startDate) && (b.startTime > a.startTime)) ? -1 : 0);
-
 
   // define the function that runs when the form is submitted
   const onSubmit = (e) => {
@@ -33,7 +31,7 @@ function RecoveryTimes() {
     localStorage.setItem("recoveries_json", JSON.stringify(recoveries));
   }, [recoveries])
   
-  return (
+ return (
     <div className="container pt-5">
       <form onSubmit={onSubmit}>
         <h1 id="recoveryTimesTitle">Recovery Times</h1>

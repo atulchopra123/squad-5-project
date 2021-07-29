@@ -34,18 +34,34 @@ test("Validate adding multiple recovery time", () => {
   const durationField = screen.getByLabelText("Duration \(minutes\):"); 
 
   // Add event 1
-  userEvent.type(startDateField, "8/1/2021");
+  userEvent.type(startDateField, "2019-06-20");
   userEvent.type(startTimeField, "07:01 AM");
   userEvent.type(durationField, "60");
   userEvent.click(screen.getByText("Add Recovery Time")); 
  
   // Add event 2
-  userEvent.type(startDateField, "9/1/2021");
+  userEvent.type(startDateField, "2020-09-10");
   userEvent.type(startTimeField, "08:05 AM");
   userEvent.type(durationField, "120");
   userEvent.click(screen.getByText("Add Recovery Time"));  
 
   expect(screen.getByText(/90.00 minutes/)).toBeVisible();
+});
+
+test("Validate adding date", () => {
+  render(<RecoveryTimes />);
+
+  const startDateField = screen.getByLabelText("Start Date:");
+  const startTimeField = screen.getByLabelText("Start Time:");
+  const durationField = screen.getByLabelText("Duration \(minutes\):"); 
+
+  // Add event 1
+  userEvent.type(startDateField, "2021-08-01");
+  userEvent.type(startTimeField, "07:01 AM");
+  userEvent.type(durationField, "60");
+  userEvent.click(screen.getByText("Add Recovery Time")); 
+ 
+  expect(screen.getByText(/8\/1\/2021/)).toBeVisible();
 });
 
 test('pass invalid duration value of "A" entered into input field', () => {
