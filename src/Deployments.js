@@ -4,7 +4,7 @@ import {formatDate, formatTime, fixedRound} from "./Squad5Functions.js";
 let depNum = 1;
 
 
-export default function Deployments() {
+export default function Deployments(props) {
     
   // define state for the list of deployments <td>{format(new Date(deployment.date), "'Today is a' eeee")}</td>
   const [deployments, setDeployments] = useState([]);
@@ -43,7 +43,7 @@ export default function Deployments() {
   useEffect(() => {
     // This is be executed when `deployments` state changes as useState() is async
     updateFrequency()
-  }, [deployments])
+  }, [])
 
   var freq = 0
   updateFrequency();
@@ -90,6 +90,8 @@ return <div className="container pt-5">
           onChange={(e) => setNewDeployments({ ...newDeployments, time: e.target.value })}
         />
       </p>
+      <br/>
+      {props.freq}
       <button className="btn btn-primary">Add Deployment</button>
     </form>
   </div>

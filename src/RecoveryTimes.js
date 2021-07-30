@@ -1,10 +1,9 @@
 import './RecoveryTimes.css';
 import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { waitForElementToBeRemoved } from '@testing-library/react';
 import {formatDate, formatTime, fixedRound} from "./Squad5Functions.js";
 
-function RecoveryTimes() {
+function RecoveryTimes(props) {
 
   // retrieve an array of objects from localStorage
   const recoveries_stored = JSON.parse(localStorage.getItem("recoveries_json"));
@@ -23,6 +22,7 @@ function RecoveryTimes() {
     e.preventDefault();
     setRecoveries((recoveries) => [...recoveries, newRecovery]);
     setNewRecovery({ startDate: "", startTime: "", duration: "" });
+    props.setFreq(789);
   };
 
   useEffect(() => {
@@ -96,6 +96,8 @@ function RecoveryTimes() {
                   onChange={(e) => setNewRecovery({ ...newRecovery, duration: e.target.value })}
                 />
           </span>
+          <br/>
+            {props.freq}
           <br/>
           <button id="buttonAddRecovery" className="btn btn-primary">Add Recovery Time</button>
         </div>
