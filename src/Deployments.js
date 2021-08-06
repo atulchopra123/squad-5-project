@@ -15,6 +15,7 @@ export default function Deployments(props) {
       e.preventDefault();
       setDeployments((deployments) => [...deployments, newDeployments]);
       setNewDeployments({ date: "", time: "" });
+      props.setFreq(123);
   };
 
   function sortDeployments() {

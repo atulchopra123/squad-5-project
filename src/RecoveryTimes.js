@@ -22,7 +22,7 @@ function RecoveryTimes(props) {
     e.preventDefault();
     setRecoveries((recoveries) => [...recoveries, newRecovery]);
     setNewRecovery({ startDate: "", startTime: "", duration: "" });
-    props.setFreq(789);
+    props.setFreq(345);
   };
 
   useEffect(() => {

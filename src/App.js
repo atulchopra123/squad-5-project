@@ -5,7 +5,7 @@ import Deployment from "./Deployments";
 
 function App() {
 
-  const [freq, setFreq] = useState(12345);
+  const [freq, setFreq] = useState(123);
 
   return (
     <div className="row">
